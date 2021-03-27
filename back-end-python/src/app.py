@@ -10,7 +10,7 @@ def format_server_time():
   return time.strftime("%I:%M:%S %p", server_time)
 
 #@app.route('/')
-#def index(): ho fatto una modifica
+#def index(): ho fatto una modifica YYYYYYYYYYYYYYYYYYY
 #    context = { 'server_time': format_server_time() }
 #    return render_template('index.html', context=context)
 
