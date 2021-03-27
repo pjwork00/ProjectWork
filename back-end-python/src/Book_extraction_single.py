@@ -5,7 +5,22 @@ import spacy
 import spacy.displacy as displacy #Text Visualization
 import numpy as np  
 import pandas as pd 
+import re
+import tkinter
+from tkinter import filedialog
+import os
 
+def search_for_file_path ():
+    root = tkinter.Tk()
+    root.withdraw() #use to hide tkinter window
+    currdir = os.getcwd()
+    tempdir = filedialog.askopenfilename(parent=root, initialdir=currdir, title='Please select a directory')
+    if len(tempdir) > 0:
+        print ("You chose: %s" % tempdir)
+    base=os.path.basename(tempdir)
+    base=os.path.splitext(base)[0]
+
+    return tempdir, base
 
 # from epub to html
 def epub2thtml(epub_path):
@@ -79,35 +94,48 @@ def save_lugares(Book2):
 
 
 def quote_book(lugares, label, start_ent, end_ent, Book):
-    len(start_ent)
+    #len(start_ent)
     start_frase=[]
     end_frase=[]
-    for i in start_ent:
+    for i in end_ent[::]:
         z=i
+    
         while z<len(Book):
             if Book[z]==".":
-            #print(Book[z],z)
+            #print("finish aqui", z, i)
                 end_frase.append(z)
                 break
             else:
                 z+=1
-        f=i
-        while f>0:
+    
+    for x in start_ent[::]:
+        f=x
+        while f>=0:
             if Book[f]==".":
-            #print(Book[f],f)
+            
                 start_frase.append(f)
+            #print("start aqui", f,x)
                 break
             else:
                 f-=1
+                if f<0:
+                    Null=None
+                    start_frase.append(Null)
     Frases_Book=[]
     z=0
     for i in start_frase:
-        Frases_Book.append(Book[start_frase[z]:end_frase[z]])
+        Frases_clean=re.sub('\n |  |\. ', '', (Book[start_frase[z]:end_frase[z]]))
+        Frases_Book.append(Frases_clean)
         z+=1
-    Data_Book=pd.DataFrame(list(zip(lugares, label, Frases_Book)), columns=["lugares","labes", "Quotes"])
-    Data_Book.to_csv("Data_Book.csv")
-    print("csv saved")
+    
+    Data_Book=pd.DataFrame(list(zip(lugares, label, Frases_Book)), columns=["lugares","labels", "Quotes"])
+    Data_Book=pd.DataFrame(list(zip(lugares, label, Frases_Book, Data_Book.index)), columns=["lugares","labels","Quotes", "Position"])
+    #Data_Book=pd.DataFrame(list(zip(Data_Book.index)), columns=["Position"])
+    #Data_Book.to_csv("Data/Data_Book.csv")
+    print("Quotes extracted")
     return Frases_Book, Data_Book
+
+
 
 
 def show_text_ner(Book2):
