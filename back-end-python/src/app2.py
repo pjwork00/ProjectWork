@@ -9,22 +9,37 @@ def format_server_time():
   server_time = time.localtime()
   return time.strftime("%I:%M:%S %p", server_time)
 
-#@app.route('/')
-#def index(): ho fatto una modifica YYYYYYYYYYYYYYYYYYY
-#    context = { 'server_time': format_server_time() }
-#    return render_template('index.html', context=context)
-
-# @app.route('/')
-# def home():
-#     return render_template('home.html')
+def do_something(text1,text2):
+   text1 = text1.upper()
+   text2 = text2.upper()
+   combine = text1 + text2
+   return combine
 
 
-@app.route("/", methods=['GET'])
-def test():
+@app.route('/')
+def home():
+    return render_template('home.html')
 
-    # request.method == 'GET'
-    return jsonify({'basicElement': 'String returned by python API'})
-    #return Analysis_data.prova_1()
+
+@app.route('/join', methods=['GET','POST'])
+def my_form_post():
+    text1 = request.form['text1']
+    word = request.args.get('text1')
+    text2 = request.form['text2']
+    combine = do_something(text1,text2)
+    result = {
+        "output": combine
+    }
+    result = {str(key): value for key, value in result.items()}
+    return jsonify(result=result)
+
+
+# @app.route("/", methods=['GET'])
+# def test():
+
+#     # request.method == 'GET'
+#     return jsonify({'basicElement': 'String returned by python API'})
+#     #return Analysis_data.prova_1()
 
 
 

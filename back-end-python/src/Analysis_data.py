@@ -143,7 +143,7 @@ def GetPlaces(api_key, location_med, type_loc, Book_name):
         details = api.get_place_details(place['place_id'], fields)
 
     Data_Hotels=pd.DataFrame([])
-#Extract data from places dataframe
+    #Extract data from places dataframe
     for place in places:
         details = api.get_place_details(place['place_id'], fields)
         try:
@@ -212,3 +212,9 @@ def GetPlaces(api_key, location_med, type_loc, Book_name):
         Data_Hotels.to_csv(type_loc + "_" + Book_name + ".csv")
 
     return Data_Hotels
+
+
+def prova_1():
+    #Output=dato+dato
+    Output=("lalalalal")
+    return Output
