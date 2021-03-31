@@ -31,21 +31,20 @@
       <span class="input-group-text" id="inputGroup-sizing-default"><span
           innerHTML="{{'itinerarySearchText2' | translate}}"></span></span>
       <input type="text" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default">
+        aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfDays">
     </div>
   </div>
+
   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
     <div class="input-group mb-3" style="padding-top:5px;">
       <span class="input-group-text" id="inputGroup-sizing-default"><span
           innerHTML="{{'itinerarySearchText1' | translate}}"></span></span>
       <input type="text" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default">
+        aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfPeople">
     </div>
   </div>
 </div>
-
 <br>
-
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <div class="accordion" id="accordionExample">
@@ -82,11 +81,10 @@
     </div>
   </div>
 </div>
-
 <br><br>
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align: center;">
-    <button type="button" class="btn btn-secondary btn-sm"><span
+    <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)='submitHomePageInput()'><span
         innerHTML="{{'itinerarySearchText4' | translate}}"></span></button>
   </div>
 </div>

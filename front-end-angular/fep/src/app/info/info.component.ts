@@ -23,9 +23,4 @@ export class InfoComponent implements OnInit {
   getInfo(){
     console.log(this.info);
   }
-
-
-
-
-
 }

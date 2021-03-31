@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgForm} from '@angular/forms';
+import { ApiService } from '../api.service';
 import { Book } from '../models/book';
 import { HomePageInputForm } from '../models/homePageInputForm';
 
@@ -10,12 +12,11 @@ import { HomePageInputForm } from '../models/homePageInputForm';
 export class ItinerarySearchSectionComponent implements OnInit {
 
 
-  homePageInputForm : HomePageInputForm;
+  @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
 
   booksList : Book[] = [{title : 'Angels & Demons'}, {title : 'The Great Gatsby'}, {title : 'The Odyssey'}];
 
-  constructor(){
-    this.homePageInputForm = new HomePageInputForm();
+  constructor(public apiService : ApiService){
     this.homePageInputForm.selectedBook = "Select a book"
   }
 
@@ -26,6 +27,14 @@ export class ItinerarySearchSectionComponent implements OnInit {
 
   setSelectedBook(s : String){
     this.homePageInputForm.selectedBook = s;
+  }
+
+  submitHomePageInput(){
+    this.apiService.getItinerary(this.homePageInputForm).subscribe((data)=>{
+      if(data != null){
+        console.log("Itinerary section : getItinerary responds correctly");
+      }
+    });
   }
 
 }

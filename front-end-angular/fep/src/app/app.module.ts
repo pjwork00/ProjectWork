@@ -9,6 +9,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ItinerarySearchSectionComponent } from './itinerary-search-section/itinerary-search-section.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ItinerarySearchSectionComponent } from './itinerary-search-section/itin
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
