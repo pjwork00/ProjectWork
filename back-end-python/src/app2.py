@@ -9,12 +9,17 @@ def format_server_time():
   server_time = time.localtime()
   return time.strftime("%I:%M:%S %p", server_time)
 
+# def do_something(text1,text2):
+#    text1 = text1.upper()
+#    text2 = text2.upper()
+#    combine = text1 + text2
+#    return combine
+
 def do_something(text1,text2):
-   text1 = text1.upper()
-   text2 = text2.upper()
+   text1 = text1
+   text2 = text2
    combine = text1 + text2
    return combine
-
 
 @app.route('/')
 def home():
@@ -56,4 +61,4 @@ def after_request(response):
   return response
 
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8080)))
+    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8280)))

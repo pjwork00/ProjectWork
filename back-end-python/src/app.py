@@ -22,7 +22,7 @@ def format_server_time():
 @app.route("/", methods=['GET'])
 def test():
 
-    # request.method == 'GET'
+    request.method == 'GET'
     return jsonify({'basicElement': 'String returned by python API'})
     #return Analysis_data.prova_1()
 
@@ -41,4 +41,4 @@ def after_request(response):
   return response
 
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8080)))
+    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8081)))
