@@ -10,6 +10,7 @@ from python_tsp.exact import solve_tsp_dynamic_programming
 import folium
 from folium import plugins
 from GooglePlaces import GooglePlaces
+from sklearn.cluster import KMeans
 
 def cluster_dots(df, base):
     
@@ -213,8 +214,15 @@ def GetPlaces(api_key, location_med, type_loc, Book_name):
 
     return Data_Hotels
 
+def divide_days(df,days):
 
-def prova_1():
-    #Output=dato+dato
-    Output=("lalalalal")
-    return Output
+    dat_dummy=df
+    kmeans = KMeans(n_clusters=days).fit(dat_dummy.iloc[:,3:5])
+    dat_dummy["day"]=kmeans.fit_predict(dat_dummy.iloc[:,3:5])
+    # centroids = kmeans.cluster_centers_
+    df_by_day = dat_dummy.groupby('day')
+    Schedule_day=(list(df_by_day))
+    # ax=plt.scatter(dat_dummy['LON_google'], dat_dummy['LAT_google'], c= kmeans.labels_.astype(float), s=50, alpha=0.5)
+    # #ax.scatter(centroids[:, 0], centroids[:, 1], c='red', s=50)
+    # ax
+    return Schedule_day
