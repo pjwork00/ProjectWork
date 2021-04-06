@@ -133,18 +133,15 @@ def plot_path(dat1, Book_name):
 
 
 
-def GetPlaces(api_key, location_med, type_loc, Book_name):
+def GetPlaces(api_key, location_med, type_loc):
     
     api= GooglePlaces(api_key)
     places = api.search_places_by_coordinate(location_med, "2500", type_loc)
     #Choose fields
     fields = ['name', 'formatted_address', 'international_phone_number', 'website', 'price_level', 'review']
-    for place in places:
-        #Access to details
-        details = api.get_place_details(place['place_id'], fields)
-
-    Data_Hotels=pd.DataFrame([])
-    #Extract data from places dataframe
+    Data_places=pd.DataFrame([])
+    i=0
+    #Data_Hotels=[]
     for place in places:
         details = api.get_place_details(place['place_id'], fields)
         try:
@@ -157,10 +154,10 @@ def GetPlaces(api_key, location_med, type_loc, Book_name):
         except KeyError:
             name = ""
     
-        try:
-            address = details['result']['formatted_address']
-        except KeyError:
-            address = ""
+        # try:
+        #     address = details['result']['formatted_address']
+        # except KeyError:
+        #     address = ""
     
         try:
             phone_number = details['result']['international_phone_number']
@@ -178,41 +175,42 @@ def GetPlaces(api_key, location_med, type_loc, Book_name):
 
         try:
             rating_total = place['rating']
-        
     
         except KeyError:
-            rating_total=""      
-          
-        
+            rating_total=""
+
         try:
             popular = place["user_ratings_total"]
     
-        except KeyError:    
+        except KeyError:
             popular=""
-    
+        
+        Full_review=[]
         try:
             reviews = details['result']['reviews']
+           
+            for review in reviews:
+                author_name = review['author_name']
+                rating = review['rating']
+                text = review['text']
+                time = review['relative_time_description']
+                #profile_photo = review['profile_photo_url']
+                #Data_Hotels["Popularity"]=(popular)
+                Full_review=str(Full_review) + str("Author: "+ author_name +"; Rating: "+ str(rating) +"; When: "+str(time)+ " \n "+text + 
+                "\n NEXT \n \n")
         except KeyError:
-            reviews = []
+            reviews = ""
+            Full_review=""
     
-        Full_review=[]
-        #Extract reviews per location
-        for review in reviews:
-            author_name = review['author_name']
-            rating = review['rating']
-            text = review['text']
-            time = review['relative_time_description']
-            #profile_photo = review['profile_photo_url']
-            #Data_Hotels["Popularity"]=(popular)
-            Full_review=str(Full_review) + str("Author: "+ author_name +"; Rating: "+ str(rating) +"; When: "+str(time)+ " <br> "+text + 
-            "<br> NEXT <br> <br>")
-        Data_Hotels= Data_Hotels.append(pd.DataFrame({'Name': name, 'Website': website, 
-                'Phone Number': phone_number, 'LON': lon, 'LAT': lat,
-                'Rating': rating_total, 'Popularity': popular, 'Last 5 Reviews': Full_review}, index=[0]), ignore_index=True).sort_values("Popularity", ascending=False)
+        i=i+1
         
-        Data_Hotels.to_csv(type_loc + "_" + Book_name + ".csv")
+        Data_places= Data_places.append(pd.DataFrame({'Name': name, 'Website': website, 
+                    'Phone Number': phone_number, 'LON': lon, 'LAT': lat,
+                    'Rating': rating_total, 'Popularity': popular, 'Last 5 Reviews': Full_review}, index=[0]), ignore_index=True)   
+            
+     
 
-    return Data_Hotels
+    return Data_places
 
 def divide_days(df,days):
 
