@@ -224,3 +224,10 @@ def divide_days(df,days):
     # #ax.scatter(centroids[:, 0], centroids[:, 1], c='red', s=50)
     # ax
     return Schedule_day
+
+
+def GetHotels(api_key, location_med, type, days):
+    API_values=GetPlaces(api_key, location_med, type)
+    Hotels=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
+    Hotels=Hotels.head(days*2)
+    return Hotels
