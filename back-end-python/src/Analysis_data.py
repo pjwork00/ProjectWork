@@ -101,20 +101,28 @@ def plot_path(dat1, Book_name):
     lugares3=dat1
     #ff=len(lugares3)
     # let's start again with a clean copy of the map of San Francisco
-    Area = folium.Map(location=[lugares3["LAT"].iloc[0], lugares3["LON"].iloc[0]], zoom_start=12)
+    Figure=folium.Figure(width=550, height=550)
+    
+    Area = folium.Map(location=[lugares3["LAT"].iloc[0], lugares3["LON"].iloc[0]], control_scale=True, zoom_start=12)
     Dots = plugins.MarkerCluster().add_to(Area)
 
     # loop through the dataframe and add each data point to the mark cluster
-    for lat, lng, label, label_2, in zip(lugares3["LAT"], lugares3["LON"], lugares3["quotes"], lugares3["lugares"]):
+    for lat, lng, label, label_2, typ in zip(lugares3["LAT"], lugares3["LON"], lugares3["quotes"], lugares3["lugares"],
+    lugares3["Type"]):
     
         html="<b>" + label_2 +"</b>" + "<br>" + label
         iframe = folium.IFrame(html,
                        width=500,
-                       height=100)    
+                       height=100)
+        if typ=="LIB":
+            Icon= folium.Icon(color='red', icon="book", prefix='fa', icon_color="white")
+        elif typ=="HOTEL":
+            Icon= folium.Icon(color='blue', icon="hotel", prefix='fa', icon_color="white")  
+             
         if type(lat)!=type(None):
             folium.Marker(
             location=[lat, lng],
-            icon=folium.Icon(color='red', icon="book", prefix='fa', icon_color="white"),
+            icon=Icon,
             popup=folium.Popup(iframe,max_width=500),
         ).add_to(Dots)
     loc=lugares3.iloc[:,0:2]
@@ -124,6 +132,7 @@ def plot_path(dat1, Book_name):
      <head><style> html { overflow-y: hidden; } </style></head>
      <h3 align="center" style="font-size:18px"><b>Map path</b></h3>
      ''' 
+    Figure.add_child(Area)
     Area.get_root().html.add_child(folium.Element(title_html))
     # mini_map = plugins.MiniMap(toggle_display=True)
     # # add the mini map to the big map
@@ -194,10 +203,9 @@ def GetPlaces(api_key, location_med, type_loc):
                 rating = review['rating']
                 text = review['text']
                 time = review['relative_time_description']
-                #profile_photo = review['profile_photo_url']
-                #Data_Hotels["Popularity"]=(popular)
-                Full_review=str(Full_review) + str("Author: "+ author_name +"; Rating: "+ str(rating) +"; When: "+str(time)+ " \n "+text + 
-                "\n NEXT \n \n")
+                Full_review=str(Full_review) + str("<b>Author: </b>"+ author_name +"; <br><b>Rating: </b>"+ str(rating) +
+                "<br><b>When: </b>"+str(time)+ "<br>"+text + 
+                "<br><br>")
         except KeyError:
             reviews = ""
             Full_review=""
