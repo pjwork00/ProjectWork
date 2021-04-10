@@ -207,7 +207,7 @@ def plot_path(dat1, Book_name):
 def GetPlaces(api_key, location_med, type_loc):
     
     api= GooglePlaces(api_key)
-    places = api.search_places_by_coordinate(location_med, "5000", type_loc)
+    places = api.search_places_by_coordinate(location_med, "7000", type_loc)
     #Choose fields
     fields = ['name', 'formatted_address', 'international_phone_number', 'website', 'price_level', 'review']
     Data_places=pd.DataFrame([])
@@ -248,13 +248,13 @@ def GetPlaces(api_key, location_med, type_loc):
             rating_total = place['rating']
     
         except KeyError:
-            rating_total=""
+            rating_total=0
 
         try:
             popular = place["user_ratings_total"]
     
         except KeyError:
-            popular=""
+            popular=0
         
         Full_review=[]
         try:
