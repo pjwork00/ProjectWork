@@ -12,6 +12,10 @@ from folium import plugins
 from GooglePlaces import GooglePlaces
 from sklearn.cluster import KMeans
 
+######################################################################
+######################################################################
+######################################################################
+
 def cluster_dots(df, base):
     
     f=0
@@ -61,13 +65,26 @@ def cluster_dots(df, base):
     print("saved cleaned data")
     return datos_clustered
 
+######################################################################
+######################################################################
+######################################################################
 
-def path_dots(df, Book_name):
-    df_unicos=df.drop_duplicates(subset ="LON_google") 
+def path_dots(df_unicos, Book_name, Hotel_Choosen):
+
+    df_unicos=df_unicos.append(pd.DataFrame({'LAT_google': Hotel_Choosen.LAT, 'LON_google': Hotel_Choosen.LON,
+    'labels': "HOTEL", 'lugares': '<a href="'+ (Hotel_Choosen.Website)  +'"target="_blank"> ' + (Hotel_Choosen.Name) + ' </a>' +
+    "<br><b>Rating: </b>" + str(Hotel_Choosen.Rating) +
+    #"<br><b>Website: </b>" + (Hotel_Choosen.Website) +
+    "<br><b>Popularity: </b>" + str(Hotel_Choosen.Popularity), 'Quotes': Hotel_Choosen[-1]}, index=[0]), ignore_index=True)
+    df_unicos = df_unicos.iloc[np.arange(-1, len(df_unicos)-1)]
+   # df_unicos = df_unicos.iloc[np.arange(-1, len(df_unicos)-1)]
+    #   #Charge POIs
+    #POIs_ext=POIs_ext.head(5)
+   
     sources=df_unicos.iloc[:,3:5].values.tolist()
     distance_matrix = great_circle_distance_matrix(sources)
     Matriz_dist=pd.DataFrame(distance_matrix)
-    Matriz_dist.to_csv("matriz_dist_"+ Book_name +".csv")
+    #Matriz_dist.to_csv("matriz_dist_"+ Book_name +".csv")
     new_order=[0]
     distance=[0]
     Bridge=Matriz_dist
@@ -86,15 +103,47 @@ def path_dots(df, Book_name):
     for n in range(df_unicos.shape[0]):
         for m in range(df_unicos.shape[0]):
             if df_unicos.index[m] == new_order[n]:
-                dat1 = dat1.append(pd.DataFrame({'LAT': df_unicos.iloc[m][4], 'LON': df_unicos.iloc[m][5], 
-                'order': df_unicos.iloc[n][10], 'Distance [m]': df_unicos.iloc[n][11], 'lugares': df_unicos.iloc[m][3],
-                'quotes': df_unicos.iloc[m][7], 'Position book': df_unicos.iloc[m][8]}, index=[0]), ignore_index=True)
-    print("YEAH")
-    dat1.to_csv("Data/Cleaned_data/Path_" + Book_name + ".csv")
+                dat1 = dat1.append(pd.DataFrame({'LAT': df_unicos.LAT_google[m], 'LON': df_unicos.LON_google[m], 
+                'order': df_unicos.new_order[n], 'Distance [m]': int(df_unicos.distance[n]), 'lugares': df_unicos.lugares[m],
+                'quotes': df_unicos.Quotes[m], 'Position_book': df_unicos.Position[m], 'Type': df_unicos.labels[m]}, index=[0]), ignore_index=True)
+    
+    dat1=dat1.append(pd.DataFrame({'LAT': df_unicos.LAT_google[0], 'LON': df_unicos.LON_google[0], 
+                'order': df_unicos.new_order[0], 'Distance [m]': int(df_unicos.distance[0]), 'lugares': df_unicos.lugares[0],
+                'quotes': df_unicos.Quotes[0], 'Position_book': df_unicos.Position[0], 'Type': df_unicos.labels[0]}, index=[0]), ignore_index=True)
+
+    dat1.to_csv("Data/Clean_data/Path/Path_" + Book_name + ".csv")
+    print("saved")
     return dat1
+######################################################################
+######################################################################
+######################################################################
 
 
+def add_POIs_df(df, POIs_ext):
+    df=df.sort_values("Position", ascending=True)
+    df["Quotes_total"]="<b>" + df['Position'].astype(str) + "</b>"+ "<br>" + df['Quotes']
+    df["labels"]="LIB"
 
+    #hh=df.groupby(['LON_google']).agg(lambda col: '\n'.join(col))
+    df_unicos=df.drop_duplicates(subset ="LON_google") 
+    df_unicos= df_unicos.append(pd.DataFrame({'LAT_google': POIs_ext.LAT, 'LON_google': POIs_ext.LON,
+    'labels': "TOUR", 'lugares': '<a href="'+ (POIs_ext.Website)  +'"target="_blank"> ' + (POIs_ext.Name) + ' </a>' +
+    "<br><b>Rating: </b>" + (POIs_ext.Rating) +
+    #"<br><b>Website: </b>" + (POIs_ext.Website) +
+    "<br><b>Popularity: </b><br>" + (POIs_ext.Popularity), 'Quotes': POIs_ext.iloc[:,-1]}), ignore_index=True)
+
+    s=df.assign(count=1).groupby(['LON_google','LAT_google']).agg({'count':'sum',
+    'Quotes_total':lambda x : '<br>'.join(set(x))}).reset_index()
+    
+    for n in range(s.shape[0]):
+        for m in range(s.shape[0]):
+            if df_unicos["LON_google"].iloc[m] == s["LON_google"].iloc[n]:
+                df_unicos["Quotes"].iloc[m] = s["Quotes_total"].iloc[n]
+    
+    return df_unicos
+######################################################################
+######################################################################
+######################################################################
 def plot_path(dat1, Book_name):
     import folium
     from folium import plugins
@@ -125,9 +174,20 @@ def plot_path(dat1, Book_name):
             icon=Icon,
             popup=folium.Popup(iframe,max_width=500),
         ).add_to(Dots)
-    loc=lugares3.iloc[:,0:2]
+    #partenza hotel
+    loc_start=lugares3.iloc[0:2,0:2]
+    loc_start=loc_start.values.tolist()
+    folium.PolyLine(loc_start, color='blue', weight=10, opacity=0.5).add_to(Area)
+    #Percorso luoghi
+    loc=lugares3.iloc[1:-1,0:2]
     loc=loc.values.tolist()
     folium.PolyLine(loc, color='red', weight=10, opacity=0.5).add_to(Area)
+    #Ritorno hotel
+    loc_end=lugares3.iloc[-2:-1, 0:2]
+    loc_end=loc_end.append(lugares3.iloc[0:1, 0:2])
+    loc_end=loc_end.values.tolist()
+    folium.PolyLine(loc_end, color='blue', weight=10, opacity=0.5).add_to(Area)
+
     title_html = '''
      <head><style> html { overflow-y: hidden; } </style></head>
      <h3 align="center" style="font-size:18px"><b>Map path</b></h3>
@@ -140,12 +200,14 @@ def plot_path(dat1, Book_name):
     Area.save('Maps/Clean_maps/Maps_path/Map_path_' + Book_name +'.html')
     return Area
 
-
+######################################################################
+######################################################################
+######################################################################
 
 def GetPlaces(api_key, location_med, type_loc):
     
     api= GooglePlaces(api_key)
-    places = api.search_places_by_coordinate(location_med, "2500", type_loc)
+    places = api.search_places_by_coordinate(location_med, "5000", type_loc)
     #Choose fields
     fields = ['name', 'formatted_address', 'international_phone_number', 'website', 'price_level', 'review']
     Data_places=pd.DataFrame([])
@@ -216,10 +278,10 @@ def GetPlaces(api_key, location_med, type_loc):
                     'Phone Number': phone_number, 'LON': lon, 'LAT': lat,
                     'Rating': rating_total, 'Popularity': popular, 'Last 5 Reviews': Full_review}, index=[0]), ignore_index=True)   
             
-     
-
     return Data_places
-
+######################################################################
+######################################################################
+######################################################################
 def divide_days(df,days):
 
     dat_dummy=df
@@ -232,10 +294,69 @@ def divide_days(df,days):
     # #ax.scatter(centroids[:, 0], centroids[:, 1], c='red', s=50)
     # ax
     return Schedule_day
-
-
-def GetHotels(api_key, location_med, type, days):
-    API_values=GetPlaces(api_key, location_med, type)
+######################################################################
+######################################################################
+######################################################################
+# List available HOTELS f(days)
+def GetHotels(api_key, location_med, type_loc, days):
+    API_values=GetPlaces(api_key, location_med, type_loc)
     Hotels=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
     Hotels=Hotels.head(days*2)
     return Hotels
+
+######################################################################
+######################################################################
+######################################################################
+# MAP for available HOTELS
+def Show_hotels(Hotels):
+    Hotels_AV=Hotels
+    Hotels_AV.Rating=Hotels_AV.Rating.apply(str)
+    Hotels_AV.Popularity=Hotels_AV.Popularity.apply(str)
+    Data_Hotels=pd.DataFrame({'LAT': Hotels_AV.LAT, 'LON': Hotels_AV.LON,
+        'labels': "HOTEL", 'Name': '<a href="'+ (Hotels_AV.Website)  +'"target="_blank"> ' + (Hotels_AV.Name) + ' </a>'+ 
+        "<br><b>Rating: </b>" + (Hotels_AV.Rating) +
+        #"<br><b>Website: </b>" + (Hotels_AV.Website) +
+        "<br><b>Popularity: </b>" + (Hotels_AV.Popularity), 'Quotes': Hotels["Last 5 Reviews"]})
+    Area2=[]
+    from folium import plugins
+    from folium.features import DivIcon
+    Figure=folium.Figure(width=500, height=450)
+    Area2=folium.Map(location=[Hotels["LAT"].iloc[0], Hotels["LON"].iloc[0]],
+    control_scale=True, zoom_start=12)
+    # Dots = plugins.MarkerCluster().add_to(Area2)
+    Dots = folium.map.FeatureGroup().add_to(Area2)
+
+    #mini_map = plugins.MiniMap(toggle_display=True)
+    for lat, lng, label, label2 in zip(Data_Hotels["LAT"], Data_Hotels["LON"], Data_Hotels["Name"], Data_Hotels["Quotes"]):
+        # html = Data_Hotels.to_html(
+        # classes="table table-striped table-hover table-condensed table-responsive")
+        html="<b>" + label +"</b>" + "<br>" + label2
+        iframe = folium.IFrame(html, width=450, height=100)
+
+        if type(lat)!=type(None):
+                folium.Marker(
+                location=[lat, lng], 
+                popup=folium.Popup(iframe,max_width=500), 
+                icon=folium.Icon(color='blue', icon="hotel", prefix='fa', icon_color="white")).add_to(Dots)
+        #loc=lugares3.iloc[:,0:2]
+        #loc=loc.values.tolist()
+        #folium.PolyLine(loc, color='green', weight=10, opacity=0.7).add_to(Area)
+    title_html = '''
+        <head><style> html { overflow-y: hidden; } </style></head>
+        <h3 align="center" style="font-size:18px"><b>Hotels</b></h3>
+        ''' 
+    Figure.add_child(Area2)
+    Area2.get_root().html.add_child(folium.Element(title_html))
+    return(Area2)
+######################################################################
+######################################################################
+######################################################################
+
+def GetPOIs(api_key, location_med, type_loc, days, CLT, NAT, REC, SPEED):
+    API_values=GetPlaces(api_key, location_med, type_loc)
+    POIs_ext=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
+    #POIs_ext = POIs_ext.applymap(str)
+    POIs_ext=POIs_ext.head(days*SPEED)
+    POIs_ext.Rating=POIs_ext.Rating.apply(str)
+    POIs_ext.Popularity=POIs_ext.Popularity.apply(str)
+    return POIs_ext
