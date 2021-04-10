@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm} from '@angular/forms';
-import { ApiService } from '../api.service';
-import { Book } from '../models/book';
-import { HomePageInputForm } from '../models/homePageInputForm';
+import { Router } from '@angular/router';
+import { ApiService } from '../../api.service';
+import { Book } from '../../models/book';
+import { HomePageInputForm } from '../../models/homePageInputForm';
 
 @Component({
   selector: 'app-itinerary-search-section',
@@ -16,7 +17,7 @@ export class ItinerarySearchSectionComponent implements OnInit {
 
   booksList : Book[] = [{title : 'Angels & Demons'}, {title : 'The Great Gatsby'}, {title : 'The Odyssey'}];
 
-  constructor(public apiService : ApiService){
+  constructor(public apiService : ApiService, private readonly router: Router){
     this.homePageInputForm.selectedBook = "Select a book"
   }
 
@@ -35,6 +36,9 @@ export class ItinerarySearchSectionComponent implements OnInit {
         console.log("Itinerary section : getItinerary responds correctly");
       }
     });
+    
+    // Go to itinerary page by route 
+    this.router.navigate(['itineraryPage']);
   }
 
 }
