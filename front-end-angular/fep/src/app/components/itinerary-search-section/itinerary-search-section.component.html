@@ -13,33 +13,23 @@
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
         aria-expanded="false">
-        {{homePageInputForm.selectedBook}}
+        {{homePageInputForm.selectedBook.title}}
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <div *ngFor='let book of booksList'>
-          <li><a class="dropdown-item" href="#" (click)="setSelectedBook(book.title)">{{book.title}}</a></li>
+          <li><a class="dropdown-item" (click)="homePageInputForm.selectedBook = book">{{book.title}}</a></li>
         </div>
       </ul>
     </div>
   </div>
   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-    <div class="input-group mb-3" style="padding-top:5px;">
-      <span class="input-group-text" id="inputGroup-sizing-default"><span
-          innerHTML="{{'itinerarySearchText2' | translate}}"></span></span>
-      <input type="text" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfDays">
-    </div>
+    <app-datepicker placeholderText="{{'itinerarySearchText1' | translate}}" (dateChange)="setStartDate($event)"></app-datepicker>
   </div>
 
   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-    <div class="input-group mb-3" style="padding-top:5px;">
-      <span class="input-group-text" id="inputGroup-sizing-default"><span
-          innerHTML="{{'itinerarySearchText1' | translate}}"></span></span>
-      <input type="text" class="form-control" aria-label="Sizing example input"
-        aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfPeople">
-    </div>
-  </div>
+    <app-datepicker placeholderText="{{'itinerarySearchText2' | translate}}" (dateChange)="setEndDate($event)"></app-datepicker>
 </div>
+<br>
 <br>
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -54,19 +44,39 @@
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
-
             <div class="row">
-              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Preference 1</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input"
+                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle5' | translate}}"></span></span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.culture"
                     aria-describedby="inputGroup-sizing-default">
                 </div>
               </div>
-              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                 <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default">Preference 2</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input"
+                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle6' | translate}}"></span></span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.nature"
+                    aria-describedby="inputGroup-sizing-default">
+                </div>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-group mb-3" style="padding-top:5px;">
+                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle7' | translate}}"></span></span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.recreation"
+                    aria-describedby="inputGroup-sizing-default">
+                </div>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-group mb-3" style="padding-top:5px;">
+                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle8' | translate}}"></span></span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.speed"
+                    aria-describedby="inputGroup-sizing-default">
+                </div>
+              </div>
+              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-group mb-3" style="padding-top:5px;">
+                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle9' | translate}}"></span></span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.budget"
                     aria-describedby="inputGroup-sizing-default">
                 </div>
               </div>

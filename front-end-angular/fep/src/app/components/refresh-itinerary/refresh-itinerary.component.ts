@@ -18,7 +18,7 @@ export class RefreshItineraryComponent implements OnInit {
   @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
 
   setSelectedBook(s : String){
-    this.homePageInputForm.selectedBook = s;
+    this.homePageInputForm.selectedBook.title = s;
   }
 
   submitHomePageInput(){

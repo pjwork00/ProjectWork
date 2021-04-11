@@ -1,17 +1,29 @@
+import { Book } from "./book";
+
 export class HomePageInputForm {
 
 
 
-    constructor(){
-        this.selectedBook = "";
-        this.numberOfDays = 0;
-        this.numberOfPeople = 0;
+    constructor() {
+        this.selectedBook = new Book;
+        this.startDate = new Date;
+        this.endDate = new Date;
+        this.culture = 0;
+        this.recreation = 0;
+        this.nature = 0;
+        this.speed = 0;
+        this.budget = 0;
     }
 
 
-    selectedBook: String;
-    numberOfDays : number;
-    numberOfPeople : number;
+    selectedBook: Book;
+    startDate: Date;
+    endDate: Date;
+    culture: number;
+    nature: number;
+    recreation: number;
+    speed: number;
+    budget: number;
 
 
 }

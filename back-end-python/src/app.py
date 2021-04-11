@@ -2,36 +2,46 @@ from flask import Flask, render_template, make_response, request, url_for, jsoni
 from flask_api import FlaskAPI, status, exceptions
 import os
 import time
-import Analysis_data
+
 app = Flask(__name__)
 
 def format_server_time():
   server_time = time.localtime()
   return time.strftime("%I:%M:%S %p", server_time)
 
-#@app.route('/')
-#def index(): ho fatto una modifica YYYYYYYYYYYYYYYYYYY
-#    context = { 'server_time': format_server_time() }
-#    return render_template('index.html', context=context)
-
-# @app.route('/')
-# def home():
-#     return render_template('home.html')
 
 
 @app.route("/", methods=['GET'])
-def test():
+def test1():
 
-    request.method == 'GET'
+    # request.method == 'GET'
     return jsonify({'basicElement': 'String returned by python API'})
-    #return Analysis_data.prova_1()
+
+
+@app.route("/itinerary", methods=['GET'])
+def test():
+  selectedBook = request.args.get('selectedBook')
+  startDate = request.args.get('startDate')
+  endDate = request.args.get('endDate')
+  culture = request.args.get('culture')
+  nature = request.args.get('nature')
+  recreation = request.args.get('recreation')
+  speed = request.args.get('speed')
+  budget = request.args.get('budget')
+  print(selectedBook)
+  print(startDate)
+  print(endDate)
+  print(culture)
+  print(nature)
+  print(recreation)
+  print(speed)
+  print(budget)
+  # request.method == 'GET'
+  return jsonify({'basicElement': 'String returned by python API'})
 
 
 
-#@app.route("/<string:key>/", methods=['GET'])
-#def notes_list(key):
-#request.method == 'GET'
-#return key
+
 
 @app.after_request
 def after_request(response):
@@ -41,4 +51,4 @@ def after_request(response):
   return response
 
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8081)))
+    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8080)))

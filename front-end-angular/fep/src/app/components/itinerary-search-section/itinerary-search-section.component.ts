@@ -13,21 +13,25 @@ import { HomePageInputForm } from '../../models/homePageInputForm';
 export class ItinerarySearchSectionComponent implements OnInit {
 
 
-  @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
+  homePageInputForm : HomePageInputForm;
 
-  booksList : Book[] = [{title : 'Angels & Demons'}, {title : 'The Great Gatsby'}, {title : 'The Odyssey'}];
+  booksList : Book[] = [{title : 'Angels & Demons'}, 
+  {title : 'Inferno'}, 
+  {title : 'Origin'},
+  {title : 'Da Vinci Code'},
+  {title : 'The Alchemist'},
+  {title : 'Hornet Flight'},
+  {title : 'Jackdaws'}
+];
 
   constructor(public apiService : ApiService, private readonly router: Router){
-    this.homePageInputForm.selectedBook = "Select a book"
+    var defaultBook : Book = {title: "Select a book"};
+    this.homePageInputForm = new HomePageInputForm;
+    this.homePageInputForm.selectedBook = defaultBook;
   }
 
   
   ngOnInit(): void {
-  }
-
-
-  setSelectedBook(s : String){
-    this.homePageInputForm.selectedBook = s;
   }
 
   submitHomePageInput(){
@@ -38,7 +42,16 @@ export class ItinerarySearchSectionComponent implements OnInit {
     });
     
     // Go to itinerary page by route 
-    this.router.navigate(['itineraryPage']);
+    //this.router.navigate(['itineraryPage']);
+  }
+
+
+  setStartDate(input: Date){
+    this.homePageInputForm.startDate = input;
+  }
+
+  setEndDate(input: Date){
+    this.homePageInputForm.endDate = input;
   }
 
 }

@@ -1,6 +1,4 @@
-(function($) {
-
-	$(document).ready(function() {
+jQuery( document ).ready(function($) {
 
 	var	$window = $(window),
 		$header = $('#header'),
@@ -160,5 +158,5 @@
 						$menu._hide();
 
 			});
-		});
-})(jQuery);
+
+})
