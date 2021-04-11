@@ -40,6 +40,7 @@ if __name__=="__main__":
     location_med=position_med(df)
     #INPUT: days
     Hotels=GetHotels(api_key, location_med, "lodging", days)
+    print("Hotels extracted")
     #Show on html
     Show_hotels(Hotels) #saved map on Maps/Clean_maps/Maps_path/Hotels_.html
     index=1 #Input, select hotel
@@ -49,6 +50,7 @@ if __name__=="__main__":
     # 1 = "bar",2 = "tourist_attraction", 3 = "restaurant", 4 = "night_club", 5 = "art", 6 = "museum", 7 = "church", 8 = "park"
     type_POI=4
     POIs_ext=GetPOIs(api_key, location_med, Points[type_POI], days, CLT, NAT, REC, SPEED) 
+    print(Points[type_POI], " extracted")
     df_unicos=add_POIs_df(df, POIs_ext)
 
     #Divide Clusters of points per day
@@ -60,5 +62,5 @@ if __name__=="__main__":
     Plan_day=path_dots(Day_Points, "Day_1_Angels", Hotel_Choosen)
 
     #Generate path map
-    plot_path(Plan_day, Title_book) #Saved on 
+    plot_path(Plan_day, Title_book) #Saved on Maps\Clean_maps\Maps_path\Map_path_Title_book.html
 
