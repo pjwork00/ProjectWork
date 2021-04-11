@@ -11,6 +11,7 @@ import folium
 from folium import plugins
 from GooglePlaces import GooglePlaces
 from sklearn.cluster import KMeans
+api_key="AIzaSyAJ0DKhauX591z08eBbYxtcVjbFOZLfd2I"
 
 ######################################################################
 ######################################################################
@@ -65,6 +66,94 @@ def cluster_dots(df, base):
     print("saved cleaned data")
     return datos_clustered
 
+######################################################################
+######################################################################
+######################################################################
+def position_med(df):
+    lat_med=df['LAT_google'].mean(axis=0)
+    lon_med=df['LON_google'].mean(axis=0)
+    lat_me=str(lat_med)
+    lon_med=str(lon_med)
+    location_med= lat_me + "," + lon_med
+    return location_med
+
+######################################################################
+######################################################################
+######################################################################
+
+# List available HOTELS f(days)
+def GetHotels(api_key, location_med, type_loc, days):
+    API_values=GetPlaces(api_key, location_med, type_loc)
+    Hotels=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
+    Hotels=Hotels.head(days*2)
+    Hotels=Hotels.reset_index(drop=True)
+    return Hotels
+
+###################################################################
+######################################################################
+######################################################################
+# MAP for available HOTELS
+def Show_hotels(Hotels):
+    Hotels_AV=Hotels
+    Hotels_AV.Rating=Hotels_AV.Rating.apply(str)
+    Hotels_AV.Popularity=Hotels_AV.Popularity.apply(str)
+    Data_Hotels=pd.DataFrame({'LAT': Hotels_AV.LAT, 'LON': Hotels_AV.LON,
+        'labels': "HOTEL", 'Name': '<a href="'+ (Hotels_AV.Website)  +'"target="_blank"> ' + (Hotels_AV.Name) + ' </a>'+ 
+        "<br><b>Rating: </b>" + (Hotels_AV.Rating) +
+        #"<br><b>Website: </b>" + (Hotels_AV.Website) +
+        "<br><b>Popularity: </b>" + (Hotels_AV.Popularity), 'Quotes': Hotels["Last 5 Reviews"]})
+    Area2=[]
+    from folium import plugins
+    from folium.features import DivIcon
+    Figure=folium.Figure(width=500, height=450)
+    Area2=folium.Map(location=[Hotels["LAT"].iloc[0], Hotels["LON"].iloc[0]],
+    control_scale=True, zoom_start=12)
+    # Dots = plugins.MarkerCluster().add_to(Area2)
+    Dots = folium.map.FeatureGroup().add_to(Area2)
+
+    #mini_map = plugins.MiniMap(toggle_display=True)
+    for lat, lng, index, label, label2 in zip(Data_Hotels["LAT"], Data_Hotels["LON"], 
+    Data_Hotels.index, Data_Hotels["Name"], Data_Hotels["Quotes"]):
+        # html = Data_Hotels.to_html(
+        # classes="table table-striped table-hover table-condensed table-responsive")
+        html="<b>Index: </b>" + str(index) + "<b><br>" + label +"</b>" + "<br>" + label2
+        iframe = folium.IFrame(html, width=450, height=100)
+
+        if type(lat)!=type(None):
+                folium.Marker(
+                location=[lat, lng], 
+                popup=folium.Popup(iframe,max_width=500), 
+                icon=folium.Icon(color='blue', icon="hotel", prefix='fa', icon_color="white")).add_to(Dots)
+        #loc=lugares3.iloc[:,0:2]
+        #loc=loc.values.tolist()
+        #folium.PolyLine(loc, color='green', weight=10, opacity=0.7).add_to(Area)
+    title_html = '''
+        <head><style> html { overflow-y: hidden; } </style></head>
+        <h3 align="center" style="font-size:18px"><b>Hotels</b></h3>
+        ''' 
+    Figure.add_child(Area2)
+    Area2.get_root().html.add_child(folium.Element(title_html))
+    Area2.save('Maps/Clean_maps/Maps_path/Hotels_.html')
+    return(Area2)
+######################################################################
+######################################################################
+######################################################################
+def choose_hotel(Hotels, index):
+    Hotel_Choosen=Hotels.iloc[index] #da aggiungere ad ogni cluster f(days)
+    return Hotel_Choosen
+######################################################################
+######################################################################
+######################################################################
+
+
+def GetPOIs(api_key, location_med, type_loc, days, CLT, NAT, REC, SPEED):
+    API_values=GetPlaces(api_key, location_med, type_loc)
+    POIs_ext=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
+    #POIs_ext = POIs_ext.applymap(str)
+    POIs_ext=POIs_ext.head(days*SPEED)
+    POIs_ext.Rating=POIs_ext.Rating.apply(str)
+    POIs_ext.Popularity=POIs_ext.Popularity.apply(str)
+    return POIs_ext
 ######################################################################
 ######################################################################
 ######################################################################
@@ -297,66 +386,3 @@ def divide_days(df,days):
 ######################################################################
 ######################################################################
 ######################################################################
-# List available HOTELS f(days)
-def GetHotels(api_key, location_med, type_loc, days):
-    API_values=GetPlaces(api_key, location_med, type_loc)
-    Hotels=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
-    Hotels=Hotels.head(days*2)
-    return Hotels
-
-######################################################################
-######################################################################
-######################################################################
-# MAP for available HOTELS
-def Show_hotels(Hotels):
-    Hotels_AV=Hotels
-    Hotels_AV.Rating=Hotels_AV.Rating.apply(str)
-    Hotels_AV.Popularity=Hotels_AV.Popularity.apply(str)
-    Data_Hotels=pd.DataFrame({'LAT': Hotels_AV.LAT, 'LON': Hotels_AV.LON,
-        'labels': "HOTEL", 'Name': '<a href="'+ (Hotels_AV.Website)  +'"target="_blank"> ' + (Hotels_AV.Name) + ' </a>'+ 
-        "<br><b>Rating: </b>" + (Hotels_AV.Rating) +
-        #"<br><b>Website: </b>" + (Hotels_AV.Website) +
-        "<br><b>Popularity: </b>" + (Hotels_AV.Popularity), 'Quotes': Hotels["Last 5 Reviews"]})
-    Area2=[]
-    from folium import plugins
-    from folium.features import DivIcon
-    Figure=folium.Figure(width=500, height=450)
-    Area2=folium.Map(location=[Hotels["LAT"].iloc[0], Hotels["LON"].iloc[0]],
-    control_scale=True, zoom_start=12)
-    # Dots = plugins.MarkerCluster().add_to(Area2)
-    Dots = folium.map.FeatureGroup().add_to(Area2)
-
-    #mini_map = plugins.MiniMap(toggle_display=True)
-    for lat, lng, label, label2 in zip(Data_Hotels["LAT"], Data_Hotels["LON"], Data_Hotels["Name"], Data_Hotels["Quotes"]):
-        # html = Data_Hotels.to_html(
-        # classes="table table-striped table-hover table-condensed table-responsive")
-        html="<b>" + label +"</b>" + "<br>" + label2
-        iframe = folium.IFrame(html, width=450, height=100)
-
-        if type(lat)!=type(None):
-                folium.Marker(
-                location=[lat, lng], 
-                popup=folium.Popup(iframe,max_width=500), 
-                icon=folium.Icon(color='blue', icon="hotel", prefix='fa', icon_color="white")).add_to(Dots)
-        #loc=lugares3.iloc[:,0:2]
-        #loc=loc.values.tolist()
-        #folium.PolyLine(loc, color='green', weight=10, opacity=0.7).add_to(Area)
-    title_html = '''
-        <head><style> html { overflow-y: hidden; } </style></head>
-        <h3 align="center" style="font-size:18px"><b>Hotels</b></h3>
-        ''' 
-    Figure.add_child(Area2)
-    Area2.get_root().html.add_child(folium.Element(title_html))
-    return(Area2)
-######################################################################
-######################################################################
-######################################################################
-
-def GetPOIs(api_key, location_med, type_loc, days, CLT, NAT, REC, SPEED):
-    API_values=GetPlaces(api_key, location_med, type_loc)
-    POIs_ext=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
-    #POIs_ext = POIs_ext.applymap(str)
-    POIs_ext=POIs_ext.head(days*SPEED)
-    POIs_ext.Rating=POIs_ext.Rating.apply(str)
-    POIs_ext.Popularity=POIs_ext.Popularity.apply(str)
-    return POIs_ext
