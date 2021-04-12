@@ -14,7 +14,7 @@ export class ApiService {
 
 
   public getInfo(): Observable<BasicElement> {
-    return this.httpClient.get<BasicElement>(`http://127.0.0.1:8080/`, { responseType: 'json' });
+    return this.httpClient.get<BasicElement>(`http://127.0.0.1:8081/`, { responseType: 'json' });
   }
 
 
@@ -32,7 +32,7 @@ export class ApiService {
       .set('recreation', String(input.recreation))
       .set('speed', String(input.speed))
       .set('budget', String(input.budget));
-    return this.httpClient.get<BasicElement>(`http://127.0.0.1:8080/itinerary`, { params: httpParams, responseType: 'json' });
+    return this.httpClient.get<BasicElement>(`http://127.0.0.1:8081/itinerary`, { params: httpParams, responseType: 'json' });
   }
 }
 
