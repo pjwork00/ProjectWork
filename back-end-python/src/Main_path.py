@@ -67,3 +67,9 @@ def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUD
     return Plan_day
 
 
+def test22(CLT, NAT, REC, SPEED, BUDGET):
+    CLT=int(CLT)
+    NAT=int(NAT)
+    out=CLT+ NAT
+    print(out)
+    return out
