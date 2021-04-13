@@ -30,12 +30,21 @@ Points=["lodging","bar","tourist_attraction", "restaurant", "night_club", "art",
 # BUDGET=2
 
 def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUDGET):
+    CLT= int(CLT)
+    NAT=int(NAT)
+    REC=int(REC)
+    SPEED=int(SPEED)
+    BUDGET=int(BUDGET)
     start_time = date(year=2021, month=4, day=25)
     finish_time = date(year=2021, month=4, day=30)
     difference = finish_time - start_time
     days=difference.days
+    print(days)
+    #path_file = "back-end-python/src/Data/Clean_data/Geocode_Geocode_Brown, Dan - Angels & Demons.csv"
     path_file = "Data/Clean_data/Geocode_Geocode_Brown, Dan - Angels & Demons.csv"
+    #back-end-python\src\Data\Clean_data\Geocode_Geocode_Brown, Dan - Angels & Demons.csv
     df=pd.read_csv(path_file)
+    print(df)
     print ("Loaded data")
     location_med=position_med(df)
     #INPUT: days
