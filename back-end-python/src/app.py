@@ -2,6 +2,7 @@ from flask import Flask, render_template, make_response, request, url_for, jsoni
 from flask_api import FlaskAPI, status, exceptions
 import os
 import time
+from Main_path import Itinerary_creation, test22
 
 app = Flask(__name__)
 
@@ -28,6 +29,9 @@ def test():
   recreation = request.args.get('recreation')
   speed = request.args.get('speed')
   budget = request.args.get('budget')
+  Itinerary_creation(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
+  #out=test22( culture, nature, recreation, speed, budget)
+  # print(out)
   print(selectedBook)
   print(startDate)
   print(endDate)
@@ -51,4 +55,4 @@ def after_request(response):
   return response
 
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8080)))
+    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8081)))
