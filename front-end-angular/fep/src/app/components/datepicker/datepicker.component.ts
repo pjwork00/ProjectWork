@@ -10,13 +10,14 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class DatepickerComponent implements OnInit {
 
   @Input() placeholderText? : String;
-  
+  @Input() inputDate? : Date;
   @Output() dateChange: EventEmitter<Date> = new EventEmitter();
 
-  inputDate? : Date;
+  //inputDate? : Date;
 
 
   constructor() {
+    //this.inputDate = this.inputDateIn;
    }
 
   ngOnInit(): void {

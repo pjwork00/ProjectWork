@@ -16,6 +16,7 @@ import { RefreshItineraryComponent } from './components/refresh-itinerary/refres
 import { NearbyComponent } from './components/nearby/nearby.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { InputFormData } from 'src/app/serviceDataExchangeModels/inputFormData';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -78,6 +79,7 @@ const MY_FORMATS = {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    InputFormData
   ],
   bootstrap: [AppComponent]
 })

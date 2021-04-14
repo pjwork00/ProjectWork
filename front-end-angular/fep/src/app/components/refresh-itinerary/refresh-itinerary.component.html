@@ -1,25 +1,52 @@
-<!-- <div class="row">
+<div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align: center;">
         <h3 class="h3"><span innerHTML="{{'itineraryPageText2' | translate}}"></span></h3>
     </div>
 </div>
+<br>
 <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="input-group mb-3" style="padding-top:5px;">
-            <span class="input-group-text" id="inputGroup-sizing-default"><span
-                    innerHTML="{{'itinerarySearchText2' | translate}}"></span></span>
-            <input type="text" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfDays">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                {{homePageInputForm.selectedBook.title}}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <div *ngFor='let book of booksList'>
+                    <li><a class="dropdown-item" (click)="homePageInputForm.selectedBook = book">{{book.title}}</a></li>
+                </div>
+            </ul>
         </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-top: 10px;">
+        <app-datepicker placeholderText="{{'itinerarySearchText1' | translate}}" [inputDate]="homePageInputForm.startDate" (dateChange)="setStartDate($event)">
+        </app-datepicker>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding-top: 10px;">
+        <app-datepicker placeholderText="{{'itinerarySearchText2' | translate}}" [inputDate]="homePageInputForm.endDate" (dateChange)="setEndDate($event)">
+        </app-datepicker>
     </div>
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="input-group mb-3" style="padding-top:5px;">
-            <span class="input-group-text" id="inputGroup-sizing-default"><span
-                    innerHTML="{{'itinerarySearchText1' | translate}}"></span></span>
-            <input type="text" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default" [(ngModel)]="homePageInputForm.numberOfPeople">
-        </div>
+        <app-slider sliderText="{{'culture' | translate}}" min="1" max="5" step="1" [value]="homePageInputForm.culture" (slideChange)="setCulture($event)">
+        </app-slider>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-slider sliderText="{{'nature' | translate}}" min="1" max="5" step="1" [value]="homePageInputForm.nature" (slideChange)="setNature($event)">
+        </app-slider>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-slider sliderText="{{'recreation' | translate}}" min="1" max="5" step="1" [value]="homePageInputForm.recreation"
+            (slideChange)="setRecreation($event)"></app-slider>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-slider sliderText="{{'speed' | translate}}" min="1" max="3" step="1" [value]="homePageInputForm.speed" (slideChange)="setSpeed($event)">
+        </app-slider>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-slider sliderText="{{'budget' | translate}}" min="1" max="3" step="1" [value]="homePageInputForm.budget" (slideChange)="setBudget($event)">
+        </app-slider>
     </div>
 </div>
 <br>
@@ -28,4 +55,4 @@
         <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)='submitHomePageInput()'><span
                 innerHTML="{{'itineraryPageText3' | translate}}"></span></button>
     </div>
-</div> -->
+</div>

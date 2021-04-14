@@ -11,8 +11,7 @@ export class SliderComponent implements OnInit {
   @Input() min? : String;
   @Input() max? : String;
   @Input() step? : String;
-
-  value: number = 1;
+  @Input() value: number = 1;
 
   @Output() slideChange: EventEmitter<number> = new EventEmitter();
 
