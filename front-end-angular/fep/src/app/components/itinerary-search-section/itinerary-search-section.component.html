@@ -2,9 +2,7 @@
 
   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
     <h2><span innerHTML="{{'itinerarySearchTitle1' | translate}}"></span></h2>
-
   </div>
-
 </div>
 <div class="row">
 
@@ -22,75 +20,38 @@
       </ul>
     </div>
   </div>
-  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-    <app-datepicker placeholderText="{{'itinerarySearchText1' | translate}}" (dateChange)="setStartDate($event)"></app-datepicker>
+  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="padding-top: 10px;">
+    <app-datepicker placeholderText="{{'itinerarySearchText1' | translate}}" (dateChange)="setStartDate($event)">
+    </app-datepicker>
   </div>
 
-  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-    <app-datepicker placeholderText="{{'itinerarySearchText2' | translate}}" (dateChange)="setEndDate($event)"></app-datepicker>
-</div>
-<br>
-<br>
-<div class="row">
-  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-            aria-expanded="false" aria-controls="collapseOne">
-            <span innerHTML="{{'itinerarySearchText3' | translate}}"></span>
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="row">
-              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle5' | translate}}"></span></span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.culture"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle6' | translate}}"></span></span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.nature"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle7' | translate}}"></span></span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.recreation"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle8' | translate}}"></span></span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.speed"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-              <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                <div class="input-group mb-3" style="padding-top:5px;">
-                  <span class="input-group-text" id="inputGroup-sizing-default"><span innerHTML="{{'itinerarySearchTitle9' | translate}}"></span></span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" [(ngModel)]="homePageInputForm.budget"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="padding-top: 10px;">
+    <app-datepicker placeholderText="{{'itinerarySearchText2' | translate}}" (dateChange)="setEndDate($event)">
+    </app-datepicker>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <app-slider sliderText="{{'culture' | translate}}" min="1" max="5" step="1" (slideChange)="setCulture($event)"></app-slider>
+    </div>
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <app-slider sliderText="{{'nature' | translate}}" min="1" max="5" step="1" (slideChange)="setNature($event)"></app-slider>
+    </div>
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <app-slider sliderText="{{'recreation' | translate}}" min="1" max="5" step="1" (slideChange)="setRecreation($event)"></app-slider>
+    </div>
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <app-slider sliderText="{{'speed' | translate}}" min="1" max="3" step="1" (slideChange)="setSpeed($event)"></app-slider>
+    </div>
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <app-slider sliderText="{{'budget' | translate}}" min="1" max="3" step="1" (slideChange)="setBudget($event)"></app-slider>
     </div>
   </div>
-</div>
-<br><br>
-<div class="row">
-  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align: center;">
-    <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)='submitHomePageInput()'><span
-        innerHTML="{{'itinerarySearchText4' | translate}}"></span></button>
+  
+  <div class="row" style="margin-top:30px;">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align: center;">
+      <button type="button" class="btn btn-secondary btn-sm" type="submit" (click)='submitHomePageInput()'><span
+          innerHTML="{{'itinerarySearchText4' | translate}}"></span></button>
+    </div>
   </div>
-</div>

@@ -24,7 +24,7 @@ export class ApiService {
     var startDate =formatDate(input.startDate, 'yyyy-MM-dd', "en-US");
     var endDate = formatDate(input.endDate, 'yyyy-MM-dd', "en-US");
 
-    let httpParams = new HttpParams().set('selectedBook', String(input.selectedBook))
+    let httpParams = new HttpParams().set('selectedBook', String(input.selectedBook.title))
       .set('startDate',startDate)
       .set('endDate', endDate)
       .set('culture', String(input.culture))

@@ -1,9 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -19,7 +15,16 @@ import { HeaderComponent } from './components/header/header.component';
 import { RefreshItineraryComponent } from './components/refresh-itinerary/refresh-itinerary.component';
 import { NearbyComponent } from './components/nearby/nearby.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { SliderComponent } from './components/slider/slider.component';
+
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule } from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MAT_DATE_FORMATS } from '@angular/material/core';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -48,7 +53,8 @@ const MY_FORMATS = {
     HeaderComponent,
     RefreshItineraryComponent,
     NearbyComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +65,8 @@ const MY_FORMATS = {
     MatFormFieldModule,
     MatNativeDateModule,
     BrowserAnimationsModule,
+    MatSliderModule,
+    MatCardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -69,6 +77,7 @@ const MY_FORMATS = {
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ],
   bootstrap: [AppComponent]
 })

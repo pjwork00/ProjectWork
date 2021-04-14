@@ -5,6 +5,7 @@ import { ApiService } from '../../api.service';
 import { Book } from '../../models/book';
 import { HomePageInputForm } from '../../models/homePageInputForm';
 
+
 @Component({
   selector: 'app-itinerary-search-section',
   templateUrl: './itinerary-search-section.component.html',
@@ -45,13 +46,32 @@ export class ItinerarySearchSectionComponent implements OnInit {
     //this.router.navigate(['itineraryPage']);
   }
 
-
   setStartDate(input: Date){
     this.homePageInputForm.startDate = input;
   }
 
   setEndDate(input: Date){
     this.homePageInputForm.endDate = input;
+  }
+
+  setCulture(input: any){
+    this.homePageInputForm.culture = input;
+  }
+
+  setNature(input: any){
+    this.homePageInputForm.nature = input;
+  }
+
+  setRecreation(input: any){
+    this.homePageInputForm.recreation = input;
+  }
+
+  setSpeed(input: any){
+    this.homePageInputForm.speed = input;
+  }
+
+  setBudget(input: any){
+    this.homePageInputForm.budget = input;
   }
 
 }
