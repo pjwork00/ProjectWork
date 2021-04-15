@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { InfoComponent } from './info/info.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -46,7 +45,6 @@ const MY_FORMATS = {
 @NgModule({
   declarations: [
     AppComponent,
-    InfoComponent,
     HomePageComponent,
     ItinerarySearchSectionComponent,
     ItineraryPageComponent,
