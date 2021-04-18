@@ -18,13 +18,13 @@ class GooglePlaces(object):
         res = requests.get(endpoint_url, params = params)
         results =  json.loads(res.content)
         places.extend(results['results'])
-        time.sleep(2)
+        time.sleep(1.2)
         while "next_page_token" in results:
             params['pagetoken'] = results['next_page_token'],
             res = requests.get(endpoint_url, params = params)
             results = json.loads(res.content)
             places.extend(results['results'])
-            time.sleep(2)
+            time.sleep(1.2)
         return places
  
     def get_place_details(self, place_id, fields):

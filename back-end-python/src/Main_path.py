@@ -41,7 +41,8 @@ def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUD
     days=difference.days
     print(days)
     #path_file = "back-end-python/src/Data/Clean_data/Geocode_Geocode_Brown, Dan - Angels & Demons.csv"
-    path_file = "Data/Clean_data/Geocode_Geocode_Brown, Dan - Angels & Demons.csv"
+    #path_file = "Data/Clean_data/Geocode_Geocode_Brown, Dan - Angels & Demons.csv"
+    path_file = "Data/Clean_data/" +Title +".csv"
     #back-end-python\src\Data\Clean_data\Geocode_Geocode_Brown, Dan - Angels & Demons.csv
     df=pd.read_csv(path_file)
     print(df)
