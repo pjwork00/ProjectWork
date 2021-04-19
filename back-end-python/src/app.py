@@ -29,19 +29,25 @@ def test():
   recreation = request.args.get('recreation')
   speed = request.args.get('speed')
   budget = request.args.get('budget')
-  Itinerary_creation(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
+  Itinerary=Itinerary_creation(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
   #out=test22( culture, nature, recreation, speed, budget)
   # print(out)
-  print(selectedBook)
-  print(startDate)
-  print(endDate)
-  print(culture)
-  print(nature)
-  print(recreation)
-  print(speed)
-  print(budget)
+  print(str(selectedBook))
+  print(str(startDate))
+  print(str(endDate))
+  print("Culture score: " + culture)
+  print("Nature score: " + nature)
+  print("Recreation score: " + recreation)
+  print("Speed of travelling: " + speed)
+  print("Budget available: " + budget)
   # request.method == 'GET'
-  return jsonify({'basicElement': 'String returned by python API'})
+  result = {
+        "output": Itinerary
+    }
+  result = {str(key): value for key, value in result.items()}
+  #return jsonify({'basicElement': 'String returned by python API'})
+  return jsonify(result=result)
+
 
 
 
@@ -55,4 +61,4 @@ def after_request(response):
   return response
 
 if __name__ == '__main__':
-    app.run(debug=True,host='127.0.0.1',port=int(os.environ.get('PORT', 8081)))
+    app.run(debug=False,host='127.0.0.1',port=int(os.environ.get('PORT', 8081)))
