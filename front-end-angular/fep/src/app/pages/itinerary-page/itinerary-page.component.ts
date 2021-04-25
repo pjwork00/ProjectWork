@@ -14,6 +14,7 @@ export class ItineraryPageComponent implements OnInit {
 
 
   homePageInputForm: HomePageInputForm = new HomePageInputForm();
+  itinerary? : String;
 
   constructor(public apiService: ApiService, public translate: TranslateService, private location: Location, inputFormData: InputFormData) {
     translate.addLangs(['en']);
@@ -27,8 +28,9 @@ export class ItineraryPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getItinerary(this.homePageInputForm).subscribe((data) => {
+    this.apiService.getItinerary(this.homePageInputForm).subscribe(data => {
       if (data != null) {
+        this.itinerary = data.basicElement;
         console.log("Itinerary section : getItinerary responds correctly");
       }
     });
