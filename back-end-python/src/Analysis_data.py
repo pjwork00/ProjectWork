@@ -296,7 +296,7 @@ def plot_path(dat1, Book_name):
 def GetPlaces(api_key, location_med, type_loc):
     
     api= GooglePlaces(api_key)
-    places = api.search_places_by_coordinate(location_med, "7000", type_loc)
+    places = api.search_places_by_coordinate(location_med, "10000", type_loc)
     #Choose fields
     fields = ['name', 'formatted_address', 'international_phone_number', 'website', 'price_level', 'review']
     Data_places=pd.DataFrame([])
