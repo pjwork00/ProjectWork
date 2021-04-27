@@ -82,8 +82,8 @@ def position_med(df):
 ######################################################################
 
 # List available HOTELS f(days)
-def GetHotels(api_key, location_med, type_loc, days):
-    API_values=GetPlaces(api_key, location_med, type_loc)
+def GetHotels(api_key, location_med, type_loc, days, rad):
+    API_values=GetPlaces(api_key, location_med, type_loc,rad)
     Hotels=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
     Hotels=Hotels.head(days*2)
     Hotels=Hotels.reset_index(drop=True)
@@ -146,8 +146,8 @@ def choose_hotel(Hotels, index):
 ######################################################################
 
 
-def GetPOIs(api_key, location_med, type_loc, days, CLT, NAT, REC, SPEED):
-    API_values=GetPlaces(api_key, location_med, type_loc)
+def GetPOIs(api_key, location_med, type_loc, days, CLT, NAT, REC, SPEED,rad):
+    API_values=GetPlaces(api_key, location_med, type_loc,rad)
     POIs_ext=API_values.sort_values(["Popularity","Rating"], ascending=[False, False])
     #POIs_ext = POIs_ext.applymap(str)
     POIs_ext=POIs_ext.head(days*SPEED)
@@ -293,10 +293,10 @@ def plot_path(dat1, Book_name):
 ######################################################################
 ######################################################################
 
-def GetPlaces(api_key, location_med, type_loc):
+def GetPlaces(api_key, location_med, type_loc, rad):
     
     api= GooglePlaces(api_key)
-    places = api.search_places_by_coordinate(location_med, "10000", type_loc)
+    places = api.search_places_by_coordinate(location_med, rad, type_loc)
     #Choose fields
     fields = ['name', 'formatted_address', 'international_phone_number', 'website', 'price_level', 'review']
     Data_places=pd.DataFrame([])
