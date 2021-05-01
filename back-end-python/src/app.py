@@ -2,9 +2,11 @@ from flask import Flask, render_template, make_response, request, url_for, jsoni
 from flask_api import FlaskAPI, status, exceptions
 import os
 import time
-from Main_path import Itinerary_creation, test22
+from Main_path import Itinerary_creation, test22, Search_maps
 
 app = Flask(__name__)
+
+Lista=[]
 
 def format_server_time():
   server_time = time.localtime()
@@ -29,9 +31,6 @@ def test():
   recreation = request.args.get('recreation')
   speed = request.args.get('speed')
   budget = request.args.get('budget')
-  Itinerary=Itinerary_creation(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
-  #out=test22( culture, nature, recreation, speed, budget)
-  # print(out)
   print(str(selectedBook))
   print(str(startDate))
   print(str(endDate))
@@ -40,9 +39,14 @@ def test():
   print("Recreation score: " + recreation)
   print("Speed of travelling: " + speed)
   print("Budget available: " + budget)
+  Lista=Search_maps(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
+  #Itinerary=Itinerary_creation(selectedBook, startDate, endDate, culture, nature, recreation, speed, budget)
+  #out=test22( culture, nature, recreation, speed, budget)
+  # print(out)
+  
   # request.method == 'GET'
   result = {
-        "output": Itinerary
+        "output": Lista
     }
   result = {str(key): value for key, value in result.items()}
   #return jsonify({'basicElement': 'String returned by python API'})

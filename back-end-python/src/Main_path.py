@@ -29,7 +29,7 @@ Points=["lodging","bar","tourist_attraction", "restaurant", "night_club", "art",
 # #BUDGET $=order POIs from lowest to highest, $$=mid, avg between all, $$$= highest
 # BUDGET=2
 
-def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUDGET):
+def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUDGET, rad):
     CLT= int(CLT)
     NAT=int(NAT)
     REC=int(REC)
@@ -49,7 +49,7 @@ def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUD
     print ("Loaded data")
     location_med=position_med(df)
     #INPUT: days
-    Hotels=GetHotels(api_key, location_med, "lodging", days)
+    Hotels=GetHotels(api_key, location_med, "lodging", days, rad)
     print("Hotels extracted")
     #Show on html
     Show_hotels(Hotels) #saved map on Maps/Clean_maps/Maps_path/Hotels_.html
@@ -59,7 +59,7 @@ def Itinerary_creation(Title, start_time, finish_time, CLT, NAT, REC, SPEED, BUD
     #Get points Points["type_POI"] 
     # 1 = "bar",2 = "tourist_attraction", 3 = "restaurant", 4 = "night_club", 5 = "art", 6 = "museum", 7 = "church", 8 = "park"
     type_POI=4
-    POIs_ext=GetPOIs(api_key, location_med, Points[type_POI], days, CLT, NAT, REC, SPEED) 
+    POIs_ext=GetPOIs(api_key, location_med, Points[type_POI], days, CLT, NAT, REC, SPEED, rad) 
     print(Points[type_POI], " extracted")
     df_unicos=add_POIs_df(df, POIs_ext)
 
@@ -83,3 +83,18 @@ def test22(CLT, NAT, REC, SPEED, BUDGET):
     out=CLT+ NAT
     print(out)
     return out
+
+def Search_maps(titolo_libro, startDate, endDate, CLT, NAT, REC, SPEED, BUDGET):
+    start_time = date(year=2021, month=4, day=25)
+    finish_time = date(year=2021, month=4, day=30)
+    difference = finish_time - start_time
+    days=difference.days
+    String_Maps=[]
+    for d in range(0, days):
+            path_html=('Maps/Clean_maps/Maps_path/Day_' + str(d+1) + '_' + titolo_libro  
+            + '_CLT_' + str(CLT) +'_NAT_' + str(NAT)+'_REC_' + str(REC)+'_SPEED_' + str(SPEED)+'_BUDGET_' + str(BUDGET) 
+            + '_tot_days_' + str(days)
+            + '.html')
+            String_Maps.append(path_html)
+            print(path_html)
+    return String_Maps
