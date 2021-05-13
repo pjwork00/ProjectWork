@@ -11,8 +11,8 @@ export class HomePageInputForm {
         this.culture = 0;
         this.recreation = 0;
         this.nature = 0;
-        this.speed = 0;
-        this.budget = 0;
+        this.speed = 1;
+        this.budget = 1;
     }
 
 
