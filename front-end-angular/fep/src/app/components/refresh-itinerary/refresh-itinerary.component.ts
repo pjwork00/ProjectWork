@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HomePageInputForm } from 'src/app/models/homePageInputForm';
 import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { Book } from 'src/app/models/book';
+import { MapNameBuilder } from 'src/app/temporaryMapNameBuilder/MapNameBuilder';
 
 @Component({
   selector: 'app-refresh-itinerary',
@@ -17,6 +18,8 @@ export class RefreshItineraryComponent implements OnInit {
   }
 
   @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
+  itinerary? : String[];
+  @Output() itineraryChange: EventEmitter<String[]> = new EventEmitter();
  
    booksList: Book[] = [{ title: 'Angels & Demons' },
    { title: 'Inferno' },
@@ -56,11 +59,19 @@ export class RefreshItineraryComponent implements OnInit {
    }
 
    submitHomePageInput(){
-    this.apiService.getItinerary(this.homePageInputForm).subscribe((data)=>{
-      if(data != null){
+    /* Temprorary disabled 
+     this.apiService.getItinerary(this.homePageInputForm).subscribe((data)=>{
+      if (data != null) {
+        this.itinerary = data.result;
+        this.itineraryChange.emit(this.itinerary);
         console.log("Itinerary section : getItinerary responds correctly");
       }
-    });
+    }); */
+
+    // Temporary itinerary builder
+    var mapNameBuilder : MapNameBuilder = new MapNameBuilder();
+    this.itinerary = mapNameBuilder.buildMapNames(this.homePageInputForm);
+    this.itineraryChange.emit(this.itinerary);
   }
 
 }

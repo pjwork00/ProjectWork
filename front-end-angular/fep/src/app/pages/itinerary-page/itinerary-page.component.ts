@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { HomePageInputForm } from 'src/app/models/homePageInputForm';
 import { InputFormData } from 'src/app/serviceDataExchangeModels/inputFormData';
 import { ApiService } from '../../api.service';
+import { MapNameBuilder } from 'src/app/temporaryMapNameBuilder/MapNameBuilder';
 
 @Component({
   selector: 'app-itinerary-page',
@@ -14,7 +15,7 @@ export class ItineraryPageComponent implements OnInit {
 
 
   homePageInputForm: HomePageInputForm = new HomePageInputForm();
-  itinerary? : String;
+  itinerary?: String[];
 
   constructor(public apiService: ApiService, public translate: TranslateService, private location: Location, inputFormData: InputFormData) {
     translate.addLangs(['en']);
@@ -28,12 +29,22 @@ export class ItineraryPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getItinerary(this.homePageInputForm).subscribe(data => {
+
+    /* Temprorary disabled 
+     this.apiService.getItinerary(this.homePageInputForm).subscribe((data)=>{
       if (data != null) {
-        this.itinerary = data.basicElement;
+        this.itinerary = data.result;
+        this.itineraryChange.emit(this.itinerary);
         console.log("Itinerary section : getItinerary responds correctly");
       }
-    });
+    }); */
+    // Temporary itinerary builder
+    var mapNameBuilder : MapNameBuilder = new MapNameBuilder();
+    this.itinerary = mapNameBuilder.buildMapNames(this.homePageInputForm);
+  }
+
+  setItinerary(itinerary: String[]) {
+    this.itinerary = itinerary;
   }
 
 }

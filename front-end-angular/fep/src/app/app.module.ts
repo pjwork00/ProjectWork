@@ -25,8 +25,7 @@ import {MAT_DATE_FORMATS } from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
-
-
+import { SafePipe } from './temporaryMapNameBuilder/SafePipe';
 
 const MY_FORMATS = {
   parse: {
@@ -53,7 +52,8 @@ const MY_FORMATS = {
     RefreshItineraryComponent,
     NearbyComponent,
     DatepickerComponent,
-    SliderComponent
+    SliderComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
