@@ -11,6 +11,93 @@ jQuery( document ).ready(function($) {
 			}, 100);
 		});
 
+	let img = document.querySelector('#hover-img');
+
+	img.addEventListener('mouseenter', function(e) {
+		img.setAttribute('src', e.target.getAttribute('data-hover-src'));
+	});
+	img.addEventListener('mouseleave', function(e) {
+		img.setAttribute('src', e.target.getAttribute('data-default-src'));
+	});
+
+	let img2 = document.querySelector('#hover-img2');
+//Image 2
+	img2.addEventListener('mouseenter', function(e) {
+		img2.setAttribute('src', e.target.getAttribute('data-hover-src'));
+	});
+	img2.addEventListener('mouseleave', function(e) {
+		img2.setAttribute('src', e.target.getAttribute('data-default-src'));
+	});
+//image 3
+	let img3 = document.querySelector('#hover-img3');
+
+	img3.addEventListener('mouseenter', function(e) {
+		img3.setAttribute('src', e.target.getAttribute('data-hover-src'));
+	});
+	img3.addEventListener('mouseleave', function(e) {
+		img3.setAttribute('src', e.target.getAttribute('data-default-src'));
+	});
+//image 4
+	let img4 = document.querySelector('#hover-img4');
+
+	img4.addEventListener('mouseenter', function(e) {
+		img4.setAttribute('src', e.target.getAttribute('data-hover-src'));
+	});
+	img4.addEventListener('mouseleave', function(e) {
+		img4.setAttribute('src', e.target.getAttribute('data-default-src'));
+	});
+//image 5
+let img5 = document.querySelector('#hover-img5');
+
+img5.addEventListener('mouseenter', function(e) {
+	img5.setAttribute('src', e.target.getAttribute('data-hover-src'));
+});
+img5.addEventListener('mouseleave', function(e) {
+	img5.setAttribute('src', e.target.getAttribute('data-default-src'));
+});
+
+//image 6
+let img6 = document.querySelector('#hover-img6');
+
+img6.addEventListener('mouseenter', function(e) {
+	img6.setAttribute('src', e.target.getAttribute('data-hover-src'));
+});
+img6.addEventListener('mouseleave', function(e) {
+	img6.setAttribute('src', e.target.getAttribute('data-default-src'));
+});
+
+//image 7
+let img7 = document.querySelector('#hover-img7');
+
+img7.addEventListener('mouseenter', function(e) {
+	img7.setAttribute('src', e.target.getAttribute('data-hover-src'));
+});
+img7.addEventListener('mouseleave', function(e) {
+	img7.setAttribute('src', e.target.getAttribute('data-default-src'));
+});
+
+//image 8
+let img8 = document.querySelector('#hover-img8');
+
+img8.addEventListener('mouseenter', function(e) {
+	img8.setAttribute('src', e.target.getAttribute('data-hover-src'));
+});
+img8.addEventListener('mouseleave', function(e) {
+	img8.setAttribute('src', e.target.getAttribute('data-default-src'));
+});
+
+//image 9
+let img9 = document.querySelector('#hover-img9');
+
+img9.addEventListener('mouseenter', function(e) {
+	img9.setAttribute('src', e.target.getAttribute('data-hover-src'));
+});
+img9.addEventListener('mouseleave', function(e) {
+	img9.setAttribute('src', e.target.getAttribute('data-default-src'));
+});
+
+
+
 	// Scrolly.
 		$('.scrolly').scrolly();
 
