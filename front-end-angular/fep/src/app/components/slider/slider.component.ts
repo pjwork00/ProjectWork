@@ -12,6 +12,7 @@ export class SliderComponent implements OnInit {
   @Input() max? : String;
   @Input() step? : String;
   @Input() value: number = 0;
+  @Input() labelArray: String [] = [];
 
   @Output() slideChange: EventEmitter<number> = new EventEmitter();
 
@@ -24,5 +25,15 @@ export class SliderComponent implements OnInit {
     this.value = event.value;
     this.slideChange.emit(this.value);
   }
+
+  formatThumbLabel(valore : number) : string {
+
+
+
+    
+      return "valore";
+  }
+
+
 
 }
