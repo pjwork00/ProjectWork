@@ -15,6 +15,9 @@ export class RefreshItineraryComponent implements OnInit {
   constructor(public apiService : ApiService, private readonly router: Router) { }
 
   ngOnInit(): void {
+
+    // Forced book - to be deleted
+    this.homePageInputForm.selectedBook = this.booksList[0];
   }
 
   @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;

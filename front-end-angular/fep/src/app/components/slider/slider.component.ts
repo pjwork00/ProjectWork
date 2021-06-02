@@ -7,12 +7,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
 
-  @Input() sliderText? : String;
-  @Input() min? : String;
-  @Input() max? : String;
-  @Input() step? : String;
+  @Input() sliderText?: String;
+  @Input() min?: String;
+  @Input() max?: String;
+  @Input() step?: String;
   @Input() value: number = 0;
-  @Input() labelArray: String [] = [];
+  @Input() labelArray?: string[];
 
   @Output() slideChange: EventEmitter<number> = new EventEmitter();
 
@@ -21,17 +21,20 @@ export class SliderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSlideChange(event : any): void {
+  onSlideChange(event: any): void {
     this.value = event.value;
     this.slideChange.emit(this.value);
   }
 
-  formatThumbLabel(valore : number) : string {
 
+  formatThumbLabel(index: number): string {
 
-
-    
-      return "valore";
+    // [labelArray]="['Casual','Curious','Engaging','Rewarding']"
+    var output: string = "" + index;
+    if (this.labelArray != null && index <= this.labelArray.length) {
+      output = this.labelArray[index];
+    }
+    return output;
   }
 
 

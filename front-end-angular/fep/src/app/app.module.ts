@@ -24,6 +24,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DATE_FORMATS } from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs'
 import {MatCardModule} from '@angular/material/card';
 import { SafePipe } from './temporaryMapNameBuilder/SafePipe';
 
@@ -65,6 +66,7 @@ const MY_FORMATS = {
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    MatTabsModule,
     MatCardModule,
     TranslateModule.forRoot({
       loader: {

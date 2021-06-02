@@ -6,13 +6,14 @@ export class HomePageInputForm {
 
     constructor() {
         this.selectedBook = new Book;
-        this.startDate = new Date;
-        this.endDate = new Date;
-        this.culture = 0;
-        this.recreation = 0;
-        this.nature = 0;
-        this.speed = 0;
-        this.budget = 0;
+        this.startDate = new Date();
+        this.endDate = new Date();
+        this.endDate.setDate(this.startDate.getDate() + 5);
+        this.culture = 1;
+        this.recreation = 1;
+        this.nature = 1;
+        this.speed = 1;
+        this.budget = 2;
     }
 
 
