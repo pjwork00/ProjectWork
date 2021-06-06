@@ -315,4 +315,18 @@ img9.addEventListener('mouseleave', function(e) {
 					}
 				});
 			});
+
+			$(function() {
+				$('#startYourStoryMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#startYourStoryContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
 })
