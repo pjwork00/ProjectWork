@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { Book } from 'src/app/models/book';
 import { MapNameBuilder } from 'src/app/temporaryMapNameBuilder/MapNameBuilder';
+import { Itinerary } from 'src/app/models/itinerary';
 
 @Component({
   selector: 'app-refresh-itinerary',
@@ -21,8 +22,8 @@ export class RefreshItineraryComponent implements OnInit {
   }
 
   @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
-  itinerary? : String[];
-  @Output() itineraryChange: EventEmitter<String[]> = new EventEmitter();
+  itinerary : Itinerary = new Itinerary;
+  @Output() itineraryChange: EventEmitter<Itinerary> = new EventEmitter();
  
    booksList: Book[] = [{ title: 'Angels & Demons' },
    { title: 'Inferno' },
@@ -73,7 +74,9 @@ export class RefreshItineraryComponent implements OnInit {
 
     // Temporary itinerary builder
     var mapNameBuilder : MapNameBuilder = new MapNameBuilder();
-    this.itinerary = mapNameBuilder.buildMapNames(this.homePageInputForm);
+    this.itinerary.itineraries = mapNameBuilder.buildMapNames(this.homePageInputForm);
+    this.itinerary.hotelsPath = mapNameBuilder.buildHotelNames(this.homePageInputForm);
+    this.itinerary.restaurantsPath = mapNameBuilder.buildRestaurantNames(this.homePageInputForm);
     this.itineraryChange.emit(this.itinerary);
   }
 

@@ -5,6 +5,7 @@ import { HomePageInputForm } from 'src/app/models/homePageInputForm';
 import { InputFormData } from 'src/app/serviceDataExchangeModels/inputFormData';
 import { ApiService } from '../../api.service';
 import { MapNameBuilder } from 'src/app/temporaryMapNameBuilder/MapNameBuilder';
+import { Itinerary } from 'src/app/models/itinerary';
 
 @Component({
   selector: 'app-itinerary-page',
@@ -15,7 +16,7 @@ export class ItineraryPageComponent implements OnInit {
 
 
   homePageInputForm: HomePageInputForm = new HomePageInputForm();
-  itinerary?: String[];
+  itinerary : Itinerary = new Itinerary;
 
   constructor(public apiService: ApiService, public translate: TranslateService, private location: Location, inputFormData: InputFormData) {
     translate.addLangs(['en']);
@@ -40,10 +41,12 @@ export class ItineraryPageComponent implements OnInit {
     }); */
     // Temporary itinerary builder
     var mapNameBuilder : MapNameBuilder = new MapNameBuilder();
-    this.itinerary = mapNameBuilder.buildMapNames(this.homePageInputForm);
+    this.itinerary.itineraries = mapNameBuilder.buildMapNames(this.homePageInputForm);
+    this.itinerary.hotelsPath = mapNameBuilder.buildHotelNames(this.homePageInputForm);
+    this.itinerary.restaurantsPath = mapNameBuilder.buildRestaurantNames(this.homePageInputForm);
   }
 
-  setItinerary(itinerary: String[]) {
+  setItinerary(itinerary: Itinerary) {
     this.itinerary = itinerary;
   }
 
