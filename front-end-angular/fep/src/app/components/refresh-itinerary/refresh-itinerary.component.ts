@@ -25,12 +25,12 @@ export class RefreshItineraryComponent implements OnInit {
   @Output() itineraryChange: EventEmitter<String[]> = new EventEmitter();
  
    booksList: Book[] = [{ title: 'Angels & Demons' },
-   { title: 'Inferno' },
-   { title: 'Origin' },
+  //  { title: 'Inferno' },
+  //  { title: 'Origin' },
    { title: 'Da Vinci Code' },
-   { title: 'The Alchemist' },
-   { title: 'Hornet Flight' },
-   { title: 'Jackdaws' }
+  //  { title: 'The Alchemist' },
+  //  { title: 'Hornet Flight' },
+  //  { title: 'Jackdaws' }
    ];
   
    setStartDate(input: Date) {

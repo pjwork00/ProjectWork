@@ -17,12 +17,12 @@ export class ItinerarySearchSectionComponent implements OnInit {
   inputFormDataLocal: InputFormData;
 
   booksList: Book[] = [{ title: 'Angels & Demons' },
-  { title: 'Inferno' },
-  { title: 'Origin' },
+  // { title: 'Inferno' },
+  // { title: 'Origin' },
   { title: 'Da Vinci Code' },
-  { title: 'The Alchemist' },
-  { title: 'Hornet Flight' },
-  { title: 'Jackdaws' }
+  // { title: 'The Alchemist' },
+  // { title: 'Hornet Flight' },
+  // { title: 'Jackdaws' }
   ];
 
   constructor(private readonly router: Router, inputFormData: InputFormData) {
@@ -70,7 +70,7 @@ export class ItinerarySearchSectionComponent implements OnInit {
   }
 
   setBudget(input: any) {
-    this.homePageInputForm.budget = input;
+    this.homePageInputForm.budget = 2;
   }
 
 }
