@@ -245,5 +245,74 @@ img9.addEventListener('mouseleave', function(e) {
 						$menu._hide();
 
 			});
+			
+			$(function() {
+				$('#travelitMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#travelitContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
 
+			$(function() {
+				$('#howItWorksMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#howItWorksContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
+
+			$(function() {
+				$('#testimonialsMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#testimonialsContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
+
+			$(function() {
+				$('#epicStoriesMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#epicStoriesContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
+
+			$(function() {
+				$('#aboutUsMenu').on('click', function() {
+					var target = $(this.hash);
+					target = $('#aboutUsContent');
+					if (target.length) {
+						$menu._hide();
+						$('html,body').animate({
+							scrollTop: target.offset().top
+						}, 0);
+						return false;
+					}
+				});
+			});
 })
