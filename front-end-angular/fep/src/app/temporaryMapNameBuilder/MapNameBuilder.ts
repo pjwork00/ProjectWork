@@ -28,5 +28,26 @@ export class MapNameBuilder {
         return output;
     }
 
+    buildHotelNames(homePageInputForm: HomePageInputForm) : string {
+      
+        var prefix : string = "../../assets/Maps_saved/";
+        var suffix : string = homePageInputForm.selectedBook.title + "_Hotels.html";
+
+        var output : string = prefix+suffix;
+
+        return output;
+    }
+
+    buildRestaurantNames(homePageInputForm: HomePageInputForm) : string {
+      
+        var prefix : string = "../../assets/Maps_saved/";
+        var suffix : string = homePageInputForm.selectedBook.title + "_Restaurants.html";
+
+        var output : string = prefix+suffix;
+
+        return output;
+    }
+
+
 
 }

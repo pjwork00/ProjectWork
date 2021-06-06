@@ -22,7 +22,21 @@
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
           <mat-tab-group>
-            <div *ngFor='let itin of itinerary; let i = index'>
+            <mat-tab label="Hotels">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <iframe style="width: 100%; height: 500px;" [src]="itinerary.hotelsPath | safe"></iframe>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Restaurants">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <iframe style="width: 100%; height: 500px;" [src]="itinerary.restaurantsPath | safe"></iframe>
+                </div>
+              </div>
+            </mat-tab>
+            <div *ngFor='let itin of itinerary.itineraries; let i = index'>
               <mat-tab label="Day {{i+1}}">
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
