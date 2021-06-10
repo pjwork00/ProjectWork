@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HomePageInputForm } from 'src/app/models/homePageInputForm';
 
 @Component({
   selector: 'app-nearby',
@@ -11,5 +12,7 @@ export class NearbyComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  @Input() homePageInputForm : HomePageInputForm = new HomePageInputForm;
 
 }
