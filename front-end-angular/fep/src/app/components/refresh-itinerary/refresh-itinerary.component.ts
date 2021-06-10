@@ -59,7 +59,7 @@ export class RefreshItineraryComponent implements OnInit {
    }
  
    setBudget(input: any) {
-     this.homePageInputForm.budget = input;
+     this.homePageInputForm.budget = 2;
    }
 
    submitHomePageInput(){
